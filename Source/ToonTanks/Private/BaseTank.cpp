@@ -27,6 +27,21 @@ void ABaseTank::BeginPlay()
 	
 }
 
+void ABaseTank::Fire()
+{
+	// get projectilespawnpoint location and rotation and spawn projectile class from that.
+}
+
+void ABaseTank::RotateTurret(FVector LookAtTarget)
+{
+	//TurretMesh->SetWorldRotation(LookAtTarget);
+}
+
+void ABaseTank::HandleDestruction()
+{
+	// play death anim
+}
+
 // Called every frame
 void ABaseTank::Tick(float DeltaTime)
 {

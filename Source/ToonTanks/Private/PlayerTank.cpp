@@ -4,6 +4,7 @@
 #include "PlayerTank.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Engine/World.h"
 
 APlayerTank::APlayerTank()
 {
@@ -20,16 +21,48 @@ void APlayerTank::BeginPlay()
 
 }
 
+void APlayerTank::CalculateMoveInput(float Value)
+{
+	MoveDirection = FVector(Value * MoveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);
+}
+
+void APlayerTank::CalculateRotateInput(float Value)
+{
+	float RotateAmount = Value * RotateSpeed * GetWorld()->DeltaTimeSeconds;
+	FRotator Rotation = FRotator(0, RotateAmount, 0);
+	RotationDirection = FQuat(Rotation);
+}
+
+void APlayerTank::Move()
+{
+	AddActorLocalOffset(MoveDirection, true);
+}
+
+void APlayerTank::Rotate()
+{
+	AddActorLocalRotation(RotationDirection, true);
+}
+
+void APlayerTank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	// inform to gamemode
+	// hide all comps and disable input.
+}
+
 // Called every frame
 void APlayerTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	Move();
+	Rotate();
 }
 
 // Called to bind functionality to input
 void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerTank::CalculateMoveInput);
+	PlayerInputComponent->BindAxis("Turn", this, &APlayerTank::CalculateRotateInput);
 
 }

@@ -36,4 +36,19 @@ private:
 		USpringArmComponent* SpringArmComp;
 	UPROPERTY(EditDefaultsOnly)
 		UCameraComponent* CameraComp;
+
+	FVector MoveDirection;
+	FQuat RotationDirection;
+
+	UPROPERTY(EditDefaultsOnly,Category = "Settings")
+	float MoveSpeed = 100.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Settings")
+	float RotateSpeed = 100.0f;
+
+	void CalculateMoveInput(float Value);
+	void CalculateRotateInput(float Value);
+	void Move();
+	void Rotate();
+
+	void HandleDestruction() override;
 };
