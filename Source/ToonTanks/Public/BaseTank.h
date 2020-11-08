@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class UCapsuleComponent;
 class USceneComponent;
+class ABaseProjectile;
 
 UCLASS()
 class TOONTANKS_API ABaseTank : public APawn
@@ -16,6 +17,7 @@ class TOONTANKS_API ABaseTank : public APawn
 	GENERATED_BODY()
 
 private:
+	// Componentes
 	UPROPERTY(EditDefaultsOnly)
 	UCapsuleComponent* CapsuleComp;
 	UPROPERTY(EditDefaultsOnly)
@@ -24,6 +26,10 @@ private:
 	UStaticMeshComponent* TurretMesh;
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* ProjectilSpawnPoint;
+
+	// Variables
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<ABaseProjectile> ProjectileClass;
 
 public:
 	// Sets default values for this pawn's properties

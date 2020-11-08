@@ -9,6 +9,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class APlayerController;
 /**
  * 
  */
@@ -36,6 +37,8 @@ private:
 		USpringArmComponent* SpringArmComp;
 	UPROPERTY(EditDefaultsOnly)
 		UCameraComponent* CameraComp;
+
+	APlayerController* PlayerControllerRef;
 
 	FVector MoveDirection;
 	FQuat RotationDirection;

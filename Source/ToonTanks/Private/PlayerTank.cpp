@@ -4,6 +4,7 @@
 #include "PlayerTank.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 
 APlayerTank::APlayerTank()
@@ -18,6 +19,8 @@ APlayerTank::APlayerTank()
 void APlayerTank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PlayerControllerRef = Cast<APlayerController>(UGameplayStatics::GetPlayerController(this,0));
 
 }
 
@@ -56,6 +59,13 @@ void APlayerTank::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	Move();
 	Rotate();
+	if (PlayerControllerRef)
+	{
+		FHitResult TraceHitResult;
+		PlayerControllerRef->GetHitResultUnderCursor(ECC_Visibility, false, TraceHitResult);
+		FVector HitLocation = TraceHitResult.ImpactPoint;
+		RotateTurret(HitLocation);
+		}
 }
 
 // Called to bind functionality to input
@@ -64,5 +74,5 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerTank::CalculateMoveInput);
 	PlayerInputComponent->BindAxis("Turn", this, &APlayerTank::CalculateRotateInput);
-
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerTank::Fire);
 }

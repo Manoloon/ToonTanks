@@ -19,9 +19,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		float FireRate = 2.0f;
 	UPROPERTY(EditDefaultsOnly)
-		float FireRange = 20.0f;
+		float FireRange = 520.0f;
 
-	APlayerTank* PlayerTank = nullptr;
+	APlayerTank* PlayerTank;
 
 public:
 	// Sets default values for this pawn's properties

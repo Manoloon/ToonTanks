@@ -3,6 +3,8 @@
 
 #include "BaseTank.h"
 #include "Components/CapsuleComponent.h"
+#include "BaseProjectile.h"
+#include "Engine/World.h"
 
 // Sets default values
 ABaseTank::ABaseTank()
@@ -29,17 +31,26 @@ void ABaseTank::BeginPlay()
 
 void ABaseTank::Fire()
 {
-	// get projectilespawnpoint location and rotation and spawn projectile class from that.
+	if (ProjectileClass)
+	{
+		FVector SpawnLocation = ProjectilSpawnPoint->GetComponentLocation();
+		FRotator SpawnRotation = ProjectilSpawnPoint->GetComponentRotation();
+		ABaseProjectile* TempProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass,SpawnLocation, SpawnRotation);
+		TempProjectile->SetOwner(this);
+	}
 }
 
 void ABaseTank::RotateTurret(FVector LookAtTarget)
 {
-	//TurretMesh->SetWorldRotation(LookAtTarget);
+	FVector LookAtTargetClean = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
+	FVector StartLocation = TurretMesh->GetComponentLocation();
+	FRotator TurretRotation = FVector(LookAtTargetClean - StartLocation).Rotation();
+	TurretMesh->SetWorldRotation(TurretRotation);
 }
 
 void ABaseTank::HandleDestruction()
 {
-	// play death anim
+	// play animation and stuff
 }
 
 // Called every frame
