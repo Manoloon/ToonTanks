@@ -26,7 +26,6 @@ ABaseTank::ABaseTank()
 void ABaseTank::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ABaseTank::Fire()

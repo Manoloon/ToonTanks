@@ -8,6 +8,7 @@
 
 class UProjectileMovementComponent;
 class UStaticMeshComponent;
+class UPrimitiveComponent;
 
 UCLASS()
 class TOONTANKS_API ABaseProjectile : public AActor
@@ -34,6 +35,9 @@ private:
 		float Damage = 50;
 	UPROPERTY(EditDefaultsOnly)
 		float MovementSpeed = 1300;
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 
 
