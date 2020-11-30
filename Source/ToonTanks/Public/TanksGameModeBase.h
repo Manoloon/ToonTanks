@@ -34,5 +34,8 @@ protected:
 		void GameStart();
 	UFUNCTION(BlueprintImplementableEvent)
 		void GameOver(bool PlayerWon);
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Game loop")
+		int32 StartDelay = 2;
 	
 };
